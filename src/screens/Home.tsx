@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react'
-import { View, Text, Image, Animated, ScrollView, SafeAreaView } from 'react-native'
+import React, { useEffect, useState } from 'react'
+import { View, Text, Image, Animated, ScrollView, SafeAreaView, FlatList, Dimensions } from 'react-native'
 import Icon from 'react-native-vector-icons/FontAwesome'
 import { API } from './../refs/API';
 import { Fonts } from './../refs/Fonts';
@@ -23,20 +23,31 @@ type receipesType = {
     dificulty: string
 }
 
+type categoriesType = {
+    category: string,
+    key: string,
+    url: string
+}
+
+const { width, height } = Dimensions.get("window")
+
 const Home = (props: PropsList) => {
     useEffect(() => {
-        API.RecipesByPage({
-            params: {
-                page: 1
-            },
+        getCategories()
+    }, [])
+    const [categories, setCategories] = useState([] as categoriesType[])
+    const getCategories = () => {
+        API.CategoryRecipes({
             callback: {
                 onSuccess: resJson => {
+                    console.log(JSON.stringify(resJson.results, null, 4))
+                    setCategories(resJson.results)
                 },
                 onFailed: results => {
                 }
             }
         })
-    }, [])
+    }
     return (
         <SafeAreaView
             style = {{
@@ -44,32 +55,97 @@ const Home = (props: PropsList) => {
                 flex: 1
             }}
         >
-            <TouchableOpacity
+            <Text
                 style = {{
-                    flexDirection: "row",
-                    padding: 10,
-                    margin: 10,
-                    borderRadius: 8,
-                    backgroundColor: "white",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    borderColor: "gray",
-                    borderWidth: 1
+                    fontFamily: Fonts.Lato.Bold,
+                    fontSize: 20,
+                    margin: 20,
+                    color: "#303030"
                 }}
             >
-                <Icon size = {15} name = "search" color = "gray" />
-                <Text
+                Categories
+            </Text>
+            <View style = {{ flexDirection: "row" }} >
+                <View
                     style = {{
-                        marginLeft: 10,
-                        fontFamily: Fonts.Lato.Regular,
-                        color: "gray"
+                        height: 200,
+                        width: width - 80,
+                        backgroundColor: "gainsboro",
+                        borderRadius: 8,
+                        marginLeft: 20,
                     }}
-                >
-                    Search
-                </Text>
-            </TouchableOpacity>
+                />
+                <View
+                    style = {{
+                        height: 200,
+                        width: width - 80,
+                        backgroundColor: "gainsboro",
+                        borderRadius: 8,
+                        marginLeft: 20,
+                        transform: [{scale: 0.93}]
+                    }}
+                />
+            </View>
+
+            <Text
+                style = {{
+                    fontFamily: Fonts.Lato.Bold,
+                    fontSize: 20,
+                    margin: 20,
+                    color: "#303030"
+                }}
+            >
+                Recipes
+            </Text>
+            <View style = {{ flexDirection: "row", flexWrap: "wrap" }} >
+                <View
+                    style = {{
+                        height: 200,
+                        width: width / 2 - 30,
+                        backgroundColor: "gainsboro",
+                        borderRadius: 8,
+                        marginLeft: 20,
+                        marginRight: 10,
+                        marginBottom: 20
+                    }}
+                />
+                <View
+                    style = {{
+                        height: 200,
+                        width: width / 2 - 30,
+                        backgroundColor: "gainsboro",
+                        borderRadius: 8,
+                        marginLeft: 10,
+                        marginRight: 20,
+                        marginBottom: 20
+                    }}
+                />
+                <View
+                    style = {{
+                        height: 200,
+                        width: width / 2 - 30,
+                        backgroundColor: "gainsboro",
+                        borderRadius: 8,
+                        marginLeft: 20,
+                        marginRight: 10,
+                        marginBottom: 20
+                    }}
+                />
+                <View
+                    style = {{
+                        height: 200,
+                        width: width / 2 - 30,
+                        backgroundColor: "gainsboro",
+                        borderRadius: 8,
+                        marginLeft: 10,
+                        marginRight: 20,
+                        marginBottom: 20
+                    }}
+                />
+            </View>
         </SafeAreaView>
     )
+
 }
 
 export default Home
