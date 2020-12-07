@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { View, ScrollView, Text, Image, SafeAreaView, Dimensions, ActivityIndicator, Platform } from 'react-native'
+import { View, ScrollView, Text, Image, SafeAreaView, Dimensions, ActivityIndicator, Platform, Modal, TouchableOpacity } from 'react-native'
 
 import { StackNavigationProp } from '@react-navigation/stack'
 import { RouteProp } from '@react-navigation/native'
@@ -45,6 +45,7 @@ const RecipesDetail = (props: PropsList) => {
     }, [])
 
     const [recipe, setRecipe] = useState({} as recipeType)
+    const [isImageExpand, setIsImageExpand] = useState(false)
     const [loading, setLoading] = useState(false)
     const [isError, setIsError] = useState(false)
 
@@ -127,15 +128,38 @@ const RecipesDetail = (props: PropsList) => {
                             paddingHorizontal: 20
                         }}
                     >
-                        <Image
-                            source = {{uri: recipe.thumb}}
+                        <View
                             style = {{
                                 width: "100%",
                                 height: 300,
                                 borderRadius: 8,
-                                backgroundColor: "dimgray"
+                                overflow: "hidden"
                             }}
-                        />
+                        >
+                            <TouchableRipple
+                                rippleColor = "rgba(0,0,0,0.75)"
+                                underlayColor = "rgba(0,0,0,0.75)"
+                                borderless = {true}
+                                style = {{
+                                    width: "100%",
+                                    height: 300,
+                                    borderRadius: 8,
+                                }}
+                                onPress = {() => {
+                                    setIsImageExpand(true)
+                                }}
+                            >
+                                <Image
+                                    source = {{uri: recipe.thumb != null ? recipe.thumb : route.params.thumb}}
+                                    style = {{
+                                        width: "100%",
+                                        height: 300,
+                                        borderRadius: 8,
+                                        backgroundColor: "dimgray"
+                                    }}
+                                />
+                            </TouchableRipple>
+                        </View>
                         <Text
                             style = {{
                                 marginTop: 20,
@@ -156,7 +180,7 @@ const RecipesDetail = (props: PropsList) => {
                         >
                             Kesulitan
                         </Text>
-                        <Text style = {{ fontFamily: Fonts.Lato.Regular, fontSize: 13 }} >{recipe.dificulty}</Text>
+                        <Text style = {{ fontFamily: Fonts.Lato.Regular, fontSize: 14 }} >{recipe.dificulty}</Text>
 
                         <Text
                             style = {{
@@ -168,7 +192,7 @@ const RecipesDetail = (props: PropsList) => {
                         >
                             Waktu
                         </Text>
-                        <Text style = {{ fontFamily: Fonts.Lato.Regular, fontSize: 13 }} >{recipe.times}</Text>
+                        <Text style = {{ fontFamily: Fonts.Lato.Regular, fontSize: 14 }} >{recipe.times}</Text>
 
                         <Text
                             style = {{
@@ -180,7 +204,7 @@ const RecipesDetail = (props: PropsList) => {
                         >
                             Porsi
                         </Text>
-                        <Text style = {{ fontFamily: Fonts.Lato.Regular, fontSize: 13 }} >{recipe.servings}</Text>
+                        <Text style = {{ fontFamily: Fonts.Lato.Regular, fontSize: 14 }} >{recipe.servings}</Text>
 
                         <Text
                             style = {{
@@ -192,7 +216,7 @@ const RecipesDetail = (props: PropsList) => {
                         >
                             Pembuat
                         </Text>
-                        <Text style = {{ fontFamily: Fonts.Lato.Regular, fontSize: 13 }} >{recipe.author?.user}</Text>
+                        <Text style = {{ fontFamily: Fonts.Lato.Regular, fontSize: 14 }} >{recipe.author?.user}</Text>
 
                         <Text
                             style = {{
@@ -204,7 +228,7 @@ const RecipesDetail = (props: PropsList) => {
                         >
                             Diupload
                         </Text>
-                        <Text style = {{ fontFamily: Fonts.Lato.Regular, fontSize: 13 }} >{recipe.author?.datePublished}</Text>
+                        <Text style = {{ fontFamily: Fonts.Lato.Regular, fontSize: 14 }} >{recipe.author?.datePublished}</Text>
 
                         <Text
                             style = {{
@@ -238,12 +262,12 @@ const RecipesDetail = (props: PropsList) => {
                                                         borderRadius: 8
                                                     }}
                                                 />
-                                                <Text style = {{ fontFamily: Fonts.Lato.Regular, fontSize: 13, marginTop: 5 }} >{item.item_name}</Text>
+                                                <Text style = {{ fontFamily: Fonts.Lato.Regular, fontSize: 14, marginTop: 5 }} >{item.item_name}</Text>
                                             </View>
                                         )
                                     })
                                 :
-                                    <Text style = {{ fontFamily: Fonts.Lato.Regular, fontSize: 13 }} >
+                                    <Text style = {{ fontFamily: Fonts.Lato.Regular, fontSize: 14 }} >
                                         Tidak Ada
                                     </Text>
                             }
@@ -272,12 +296,12 @@ const RecipesDetail = (props: PropsList) => {
                                     (recipe.ingredient || []).map((item, index) => {
                                         return (
                                             <View style = {{ marginTop: 5 }} key = {index} >
-                                                <Text style = {{ fontFamily: Fonts.Lato.Regular, fontSize: 13, marginTop: 5 }} >· {item}</Text>
+                                                <Text style = {{ fontFamily: Fonts.Lato.Regular, fontSize: 14, marginTop: 5 }} >· {item}</Text>
                                             </View>
                                         )
                                     })
                                 :
-                                    <Text style = {{ fontFamily: Fonts.Lato.Regular, fontSize: 13 }} >
+                                    <Text style = {{ fontFamily: Fonts.Lato.Regular, fontSize: 14 }} >
                                         Tidak Ada
                                     </Text>
                             }
@@ -306,12 +330,12 @@ const RecipesDetail = (props: PropsList) => {
                                     (recipe.step || []).map((item, index) => {
                                         return (
                                             <View style = {{ marginTop: 5 }} key = {index} >
-                                                <Text style = {{ fontFamily: Fonts.Lato.Regular, fontSize: 13, marginTop: 5 }} >· {item}</Text>
+                                                <Text style = {{ fontFamily: Fonts.Lato.Regular, fontSize: 14, marginTop: 5 }} >· {item}</Text>
                                             </View>
                                         )
                                     })
                                 :
-                                    <Text style = {{ fontFamily: Fonts.Lato.Regular, fontSize: 13 }} >
+                                    <Text style = {{ fontFamily: Fonts.Lato.Regular, fontSize: 14 }} >
                                         Tidak Ada
                                     </Text>
                             }
@@ -321,6 +345,48 @@ const RecipesDetail = (props: PropsList) => {
                     </ScrollView>
                 )
             }
+            <Modal
+                visible = {isImageExpand}
+                onRequestClose = {() => setIsImageExpand(false)}
+                transparent
+            >
+                <View
+                    style = {{
+                        flex: 1,
+                        justifyContent: "center",
+                        alignItems: "center",
+                        backgroundColor: "rgba(0,0,0,0.75)"
+                    }}
+                >
+                    <Image
+                        source = {{uri: recipe.thumb != null ? recipe.thumb : route.params.thumb}}
+                        style = {{
+                            width: "100%",
+                            height: "100%"
+                        }}
+                        resizeMode = "contain"
+                    />
+                </View>
+                <View
+                    style = {{
+                        position: "absolute",
+                        top: 20, left: 0, right: 20, bottom: 0
+                    }}
+                >
+                    <TouchableOpacity
+                        onPress = {() => setIsImageExpand(false)}
+                        style = {{
+                            alignSelf: "flex-end"
+                        }}
+                    >
+                        <Icon
+                            size = {24}
+                            name = "remove"
+                            color = "white"
+                        />
+                    </TouchableOpacity>
+                </View>  
+            </Modal>
         </SafeAreaView>
     )
 }

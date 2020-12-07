@@ -3,6 +3,7 @@ export type NavigationType = {
     Home: undefined,
     Walkthrough: undefined,
     RecipesDetail: {
-        key: any
+        key: any,
+        thumb?: string
     }
 }

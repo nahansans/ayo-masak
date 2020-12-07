@@ -635,7 +635,7 @@ const Home = (props: PropsList) => {
                             elevation: 11,
                         }}
                         onPress = {() => {
-                            navigation.navigate("RecipesDetail", { key: modalItem?.key })
+                            navigation.navigate("RecipesDetail", { key: modalItem?.key, thumb: modalItem?.thumb })
                             ModalBottomView(false)
                         }}
                         rippleColor = "rgba(0,0,0,0.15)"
