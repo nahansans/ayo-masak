@@ -46,6 +46,7 @@ const RecipesDetail = (props: PropsList) => {
 
     const [recipe, setRecipe] = useState({} as recipeType)
     const [isImageExpand, setIsImageExpand] = useState(false)
+    const [imageThumb, setImageThumb] = useState("")
     const [loading, setLoading] = useState(false)
     const [isError, setIsError] = useState(false)
 
@@ -146,6 +147,8 @@ const RecipesDetail = (props: PropsList) => {
                                     borderRadius: 8,
                                 }}
                                 onPress = {() => {
+                                    let thumb = recipe.thumb != null ? recipe.thumb : route.params.thumb
+                                    setImageThumb(`${thumb}`)
                                     setIsImageExpand(true)
                                 }}
                             >
@@ -253,15 +256,30 @@ const RecipesDetail = (props: PropsList) => {
                                     (recipe.needItem || []).map((item: needItemType, index) => {
                                         return (
                                             <View style = {{ marginTop: 5 }} key = {index} >
-                                                <Image
-                                                    source = {{uri: item.thumb_item}}
-                                                    style = {{
-                                                        width: width * 0.25,
-                                                        height: 75,
-                                                        backgroundColor: "dimgray",
-                                                        borderRadius: 8
+                                                <TouchableRipple
+                                                rippleColor = "rgba(0,0,0,0.75)"
+                                                underlayColor = "rgba(0,0,0,0.75)"
+                                                borderless = {true}
+                                                style = {{
+                                                    borderRadius: 8,
+                                                    width: width * 0.25,
+                                                    height: 75,
+                                                }}
+                                                    onPress = {() => {
+                                                        setImageThumb(`${item.thumb_item}`)
+                                                        setIsImageExpand(true)
                                                     }}
-                                                />
+                                                >
+                                                    <Image
+                                                        source = {{uri: item.thumb_item}}
+                                                        style = {{
+                                                            width: width * 0.25,
+                                                            height: 75,
+                                                            backgroundColor: "dimgray",
+                                                            borderRadius: 8
+                                                        }}
+                                                    />
+                                                </TouchableRipple>
                                                 <Text style = {{ fontFamily: Fonts.Lato.Regular, fontSize: 14, marginTop: 5 }} >{item.item_name}</Text>
                                             </View>
                                         )
@@ -359,7 +377,7 @@ const RecipesDetail = (props: PropsList) => {
                     }}
                 >
                     <Image
-                        source = {{uri: recipe.thumb != null ? recipe.thumb : route.params.thumb}}
+                        source = {{uri: imageThumb}}
                         style = {{
                             width: "100%",
                             height: "100%"
