@@ -1,5 +1,8 @@
 export type NavigationType = {
     SplashScreen: undefined,
     Home: undefined,
-    Walkthrough: undefined
+    Walkthrough: undefined,
+    RecipesDetail: {
+        key: any
+    }
 }

@@ -7,6 +7,7 @@ import { NavigationType } from '../types/navigation'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import LinearGradient from 'react-native-linear-gradient'
 import { Colors } from 'react-native/Libraries/NewAppScreen'
+import Indicator from './../components/Indicator'
 
 
 type PropsList = {
@@ -34,35 +35,6 @@ const DATA = [
 
 const { width, height } = Dimensions.get(`screen`)
 
-const Indicator = ({ScrollX}: any) => {
-    return (
-        <View style = {{ position: `absolute`, bottom: 100, flexDirection: `row` }} >
-            {DATA.map((_, i) => {
-                const inputRange = [(i - 1) * width, i * width, (i + 1) * width]
-                const scale = ScrollX.interpolate({
-                    inputRange,
-                    outputRange: [0.8, 1.4, 0.8],
-                    extrapolate: `clamp`
-                })
-                return (
-                    <Animated.View
-                        key = {`indicator-${i}`}
-                        style = {{
-                            height: 5,
-                            width: 5,
-                            borderRadius: 5,
-                            backgroundColor: `#303030`,
-                            margin: 5,
-                            transform: [{scale}]
-                        }}
-                    >
-
-                    </Animated.View>
-                )
-            })}
-        </View>
-    )
-}
 
 const Walkthrough = (props: PropsList) => {
     const ScrollX = useRef(new Animated.Value(0)).current
@@ -166,7 +138,9 @@ const Walkthrough = (props: PropsList) => {
                     )
                 }}
             />
-            <Indicator ScrollX = {ScrollX} />
+            <View style = {{ margin: 20 }} >
+                <Indicator ScrollX = {ScrollX} data = {DATA} color = "#303030" />
+            </View>
             <TouchableOpacity
                 activeOpacity = {0.7}
                 style = {{
