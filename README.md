@@ -118,8 +118,8 @@ declare module 'react-native-tts' {
         rate: number;
         voiceId: string;
         androidParams: Partial<{
-          KEY_PARAM_PAN: string;
-          KEY_PARAM_VOLUME: string;
+          KEY_PARAM_PAN: number;
+          KEY_PARAM_VOLUME: number;
           KEY_PARAM_STREAM: string;
         }>;
       }>,
