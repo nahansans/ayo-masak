@@ -14,7 +14,7 @@ import {
     Modal, 
     TouchableOpacity
 } from 'react-native'
-import Icon from 'react-native-vector-icons/FontAwesome'
+import Icon from 'react-native-vector-icons/AntDesign'
 import { API } from './../refs/API'
 import { Fonts } from './../refs/Fonts'
 import { Colors } from './../refs/Colors'
@@ -142,10 +142,11 @@ const Home = (props: PropsList) => {
     const [categories, setCategories] = useState([] as categoriesType[])
     const [recipes, setRecipes] = useState([] as recipesType[])
     const [isTryingLoadData, setIsTryingLoadData] = useState(false)    
-    const [isRefreshing, setIsRefreshing] = useState(false)
     const [anyOtherData, setAnyOtherData] = useState(true)
     const [viewMoreVisible, setViewMoreVisible] = useState(true)
     const [modalVisible, setModalVisible] = useState(false)
+    const [isRefreshing, setIsRefreshing] = useState(false)
+    const [scrollUp, setScrollUp] = useState(false)
     const [modalItem, setModalItem] = useState<recipesType>()
 
     const scrollX = useRef(new Animated.Value(0)).current
@@ -153,6 +154,7 @@ const Home = (props: PropsList) => {
     const scale = useRef(new Animated.Value(1)).current
     const opacity = useRef(new Animated.Value(1)).current
     const AnimatedModalTranslate = useRef(new Animated.Value(height)).current
+    const scrollViewRef = useRef<ScrollView>()
 
 
     let page = 1
@@ -258,10 +260,17 @@ const Home = (props: PropsList) => {
                 :
                 <>
                     <Animated.ScrollView
+                        ref = {scrollViewRef}
                         onScroll = {Animated.event(
                             [{nativeEvent: { contentOffset: { x: scrollY }}}],
                             {
                                 listener: (event: any) => {
+                                    const contentY = event.nativeEvent.contentOffset.y
+                                    if (contentY > ( height / 2 )) {
+                                        setScrollUp(true)
+                                    } else {
+                                        setScrollUp(false)
+                                    }
                                     const isCloseToBottom = ({layoutMeasurement, contentOffset, contentSize} : any) => {
                                         const paddingToBottom = 20
                                         return layoutMeasurement.height + contentOffset.y >= contentSize.height - paddingToBottom
@@ -528,6 +537,45 @@ const Home = (props: PropsList) => {
                                 More
                             </Text>
                         </Animated.View>
+                        : null
+                    }
+                    {
+                        scrollUp ?
+                        <View
+                            style = {{
+                                position: "absolute",
+                                bottom: 20,
+                                right: 20,
+                                backgroundColor: "paleturquoise",
+                                padding: 10,
+                                borderRadius: 8,
+                                shadowColor: "dimgray",
+                                shadowOffset: {
+                                    width: 0,
+                                    height: 5,
+                                },
+                                shadowOpacity: 0.36,
+                                shadowRadius: 6.68,
+
+                                elevation: 11,
+                            }}
+                        >
+                            <TouchableOpacity
+                                onPress = {() => {
+                                    scrollViewRef.current?.scrollTo({x: 0, y: 0, animated: true})
+                                }}
+                                style = {{
+                                    width: "100%",
+                                    height: "100%"
+                                }}
+                            >
+                                <Icon
+                                    name = "up"
+                                    size = {24}
+                                    color = "black"
+                                />
+                            </TouchableOpacity>
+                        </View>
                         : null
                     }
                 </>
