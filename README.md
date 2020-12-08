@@ -1,6 +1,6 @@
 # ayo-masak
 
-#Known Library Issues
+# Known Library Issues
 1. jika mengalami problems ```Could not find a declaration file for module 'react-native-tts'. 'ayo-masak/node_modules/react-native-tts/index.js' implicitly has an 'any' type.
   Try `npm install @types/react-native-tts` if it exists or add a new declaration (.d.ts) file containing `declare module 'react-native-tts';` ```
 2. silahkan buat file ```index.d.ts``` di folder ```node_modules/react-native-tts/```
