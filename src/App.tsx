@@ -8,7 +8,8 @@ import { NavigationType } from './types/navigation'
 import SplashScreen from './screens/SplashScreen'
 import Home from './screens/Home'
 import Walkthrough from './screens/Walkthrough'
-import RecipesDetail from './screens/RecipesDetail';
+import RecipesDetail from './screens/RecipesDetail'
+import RecipeStep from './screens/RecipeStep'
 
 const Stack = createStackNavigator<NavigationType>()
 
@@ -27,6 +28,7 @@ const App = () => {
         <Stack.Screen name = "Walkthrough" component = {Walkthrough} />
         <Stack.Screen name = "Home" component = {Home} />
         <Stack.Screen name = "RecipesDetail" component = {RecipesDetail} />
+        <Stack.Screen name = "RecipeStep" component = {RecipeStep} />
       </Stack.Navigator>
     </NavigationContainer>
     </>

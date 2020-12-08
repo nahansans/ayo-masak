@@ -7,7 +7,7 @@ import { NavigationType } from '../types/navigation'
 import { Fonts } from './../refs/Fonts'
 import { API } from './../refs/API'
 import { TouchableRipple } from 'react-native-paper'
-import Icon from 'react-native-vector-icons/FontAwesome'
+import Icon from 'react-native-vector-icons/AntDesign'
 
 type PropsList = {
     navigation: StackNavigationProp<NavigationType, "RecipesDetail">,
@@ -93,7 +93,7 @@ const RecipesDetail = (props: PropsList) => {
             >
                 <Icon
                     size = {24}
-                    name = "chevron-left"
+                    name = "arrowleft"
                     color = "black"
                 />
             </TouchableRipple>
@@ -335,7 +335,41 @@ const RecipesDetail = (props: PropsList) => {
                         >
                             Langkah-langkah
                         </Text>
-                        <View
+                        <TouchableRipple
+                            style = {{
+                                backgroundColor: "paleturquoise",
+                                width: "100%",
+                                padding: 20,
+                                borderRadius: 8,
+                                marginTop: 20,
+                                shadowColor: "dimgray",
+                                shadowOffset: {
+                                    width: 0,
+                                    height: 5,
+                                },
+                                shadowOpacity: 0.36,
+                                shadowRadius: 6.68,
+    
+                                elevation: 11,
+                            }}
+                            onPress = {() => {
+                                navigation.push("RecipeStep", {steps: (recipe.step || []), currentStepIndex: 0, key: route.params.key, thumb: route.params.thumb })
+                            }}
+                            rippleColor = "rgba(0,0,0,0.15)"
+                            underlayColor = "rgba(0,0,0,0.15)"
+                            borderless = {Platform.Version < 28 ? false : true}
+                        >
+                            <Text
+                                style = {{
+                                    textAlign: "center",
+                                    fontFamily: Fonts.Lato.Regular,
+                                    fontSize: 16
+                                }}
+                            >
+                                Detail Langkah-langkah
+                            </Text>
+                        </TouchableRipple>
+                        {/* <View
                             style = {{
                                 padding: 10,
                                 backgroundColor: "aliceblue",
@@ -357,7 +391,7 @@ const RecipesDetail = (props: PropsList) => {
                                         Tidak Ada
                                     </Text>
                             }
-                        </View>
+                        </View> */}
                         <View style = {{ paddingBottom: 20 }} />
 
                     </ScrollView>
@@ -399,7 +433,7 @@ const RecipesDetail = (props: PropsList) => {
                     >
                         <Icon
                             size = {24}
-                            name = "remove"
+                            name = "closecircleo"
                             color = "white"
                         />
                     </TouchableOpacity>

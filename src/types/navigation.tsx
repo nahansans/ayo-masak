@@ -5,5 +5,11 @@ export type NavigationType = {
     RecipesDetail: {
         key: any,
         thumb?: string
+    },
+    RecipeStep: {
+        steps?: any,
+        currentStepIndex?: any,
+        key?: any,
+        thumb?: string
     }
 }
