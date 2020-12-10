@@ -1,4 +1,4 @@
-import React, { useRef } from 'react'
+import React, { useRef, useState } from 'react'
 import { View, Image, Text, FlatList, Animated, Dimensions, TouchableOpacity } from 'react-native'
 import { Fonts } from './../refs/Fonts'
 import { StackNavigationProp } from '@react-navigation/stack'
@@ -6,7 +6,6 @@ import { RouteProp } from '@react-navigation/native'
 import { NavigationType } from '../types/navigation'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import LinearGradient from 'react-native-linear-gradient'
-import { Colors } from 'react-native/Libraries/NewAppScreen'
 import Indicator from './../components/Indicator'
 
 
@@ -35,19 +34,10 @@ const DATA = [
 
 const { width, height } = Dimensions.get(`screen`)
 
-
 const Walkthrough = (props: PropsList) => {
     const ScrollX = useRef(new Animated.Value(0)).current
     return (
-        <View style = {{ flex: 1, alignItems: `center` }} >
-            <LinearGradient
-                colors = {["white", "white","paleturquoise"]}
-                style = {{
-                    position: "absolute",
-                    top: 0, left: 0, bottom: 0, right: 0,
-                    // opacity: 0.8
-                }}
-            />
+        <View style = {{ flex: 1, alignItems: `center`, backgroundColor: "black" }} >
             <Animated.FlatList
                 data = {DATA}
                 keyExtractor = {(item) => String(item.key)}
@@ -65,17 +55,28 @@ const Walkthrough = (props: PropsList) => {
                         index * width,
                         (index + 1) * width
                     ]
-                    
-                    const translateX = ScrollX.interpolate({
-                        inputRange,
-                        outputRange: [
-                            -height, 0, height
-                        ]
-                    })
+
                     const translateXImage = ScrollX.interpolate({
                         inputRange,
                         outputRange: [
                             -width, 0, width
+                        ]
+                    })
+
+                    const opacityImage = ScrollX.interpolate({
+                        inputRange: [
+                            (index - 1) * width,
+                            index * width,
+                            (index + 1) * width
+                        ],
+                        outputRange: [
+                            0, 1, 0
+                        ]
+                    })
+                    const translateX = ScrollX.interpolate({
+                        inputRange,
+                        outputRange: [
+                            -height, 0, height
                         ]
                     })
                     const opacity = ScrollX.interpolate({
@@ -85,25 +86,14 @@ const Walkthrough = (props: PropsList) => {
                         ]
                     })
 
-                    const opacityImage = ScrollX.interpolate({
-                        inputRange: [
-                            (index - 0.5) * width,
-                            index * width,
-                            (index + 0.5) * width
-                        ],
-                        outputRange: [
-                            0, 1, 0
-                        ]
-                    })
                     return (
                         <>
                             <View style = {{ width, alignItems: `center` }} >
-                                <View style = {{ flex: 0.7}} >
+                                <View style = {{ flex: 1}} >
                                     <Animated.View
                                         style = {{
                                             width: width,
-                                            height: height / 2,
-                                            borderBottomLeftRadius: height / 2,
+                                            height: height,
                                             overflow: `hidden`
                                             // padding: 20
                                         }}
@@ -111,23 +101,32 @@ const Walkthrough = (props: PropsList) => {
                                         <Animated.Image
                                             source = {{uri: item.image}}
                                             style = {{
-                                                width,
-                                                height: height / 2,
+                                                width: "100%",
+                                                height: "100%",
                                                 // borderRadius: height,
                                                 transform: [{ translateX: translateXImage }],
                                                 opacity: opacityImage
                                             }}
                                         />
                                     </Animated.View>
+                                    <LinearGradient
+                                        colors = {["rgba(0,0,0,0.0)","rgba(0,0,0,0.75)"]}
+                                        style = {{
+                                            position: "absolute",
+                                            top: 0, left: 0, bottom: 0, right: 0,
+                                            // opacity: 0.8
+                                        }}
+                                    />
                                     <Animated.Text
                                         style = {{
                                             fontFamily: Fonts.Lato.Bold,
                                             fontSize: 24,
                                             textAlign: `center`,
-                                            padding: 20,
                                             transform: [{ translateX }],
                                             opacity,
-                                            color: "#303030"
+                                            color: "#fff",
+                                            position: "absolute",
+                                            bottom: 200
                                         }}
                                     >
                                         {item.description}
@@ -138,35 +137,38 @@ const Walkthrough = (props: PropsList) => {
                     )
                 }}
             />
-            <View style = {{ margin: 20 }} >
-                <Indicator ScrollX = {ScrollX} data = {DATA} color = "#303030" />
-            </View>
-            <TouchableOpacity
-                activeOpacity = {0.7}
-                style = {{
-                    paddingHorizontal: 20,
-                    paddingVertical: 10,
-                    borderWidth: 2,
-                    borderColor: `#303030`,
-                    margin: 10,
-                    marginBottom: 35,
-                    borderRadius: 8
-                }}
-                onPress = {async() => {
-                    await AsyncStorage.setItem('isWalkthrough', 'yes')
-                    props.navigation.replace("Home")
-                }}
-            >
-                <Text
+            <View style = {{ position: "absolute", bottom: 0 }} >
+                <View style = {{ margin: 20, alignSelf: "center" }} >
+                    <Indicator ScrollX = {ScrollX} data = {DATA} color = "#fff" />
+                </View>
+                <TouchableOpacity
+                    activeOpacity = {0.7}
                     style = {{
-                        fontFamily: Fonts.Lato.Bold,
-                        color: `#303030`,
-                        fontSize: 16
+                        paddingHorizontal: 40,
+                        paddingVertical: 10,
+                        borderWidth: 1,
+                        borderColor: `#fff`,
+                        margin: 10,
+                        marginBottom: 35,
+                        borderRadius: 8,
+                        alignSelf: "center"
+                    }}
+                    onPress = {async() => {
+                        await AsyncStorage.setItem('isWalkthrough', 'yes')
+                        props.navigation.replace("Home")
                     }}
                 >
-                    Mulai
-                </Text>
-            </TouchableOpacity>
+                    <Text
+                        style = {{
+                            fontFamily: Fonts.Lato.Bold,
+                            color: `#fff`,
+                            fontSize: 16
+                        }}
+                    >
+                        Mulai
+                    </Text>
+                </TouchableOpacity>
+            </View>
         </View>
     )
 }

@@ -5,6 +5,10 @@
   "scripts": {
     "android": "react-native run-android",
     "ios": "react-native run-ios",
+    "bundle-android": "react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res",
+    "build-android": "npm run bundle-android && cd android && gradlew assemblerelease && cd ../",
+    "git-push": "git push -u origin master",
+    "gradlew-clean": "cd android && gradlew clean && cd ../",
     "start": "react-native start",
     "test": "jest",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx"
