@@ -126,7 +126,7 @@ const Walkthrough = (props: PropsList) => {
                                             opacity,
                                             color: "#fff",
                                             position: "absolute",
-                                            bottom: 200
+                                            top: height * 0.65
                                         }}
                                     >
                                         {item.description}
@@ -137,7 +137,7 @@ const Walkthrough = (props: PropsList) => {
                     )
                 }}
             />
-            <View style = {{ position: "absolute", bottom: 0 }} >
+            <View style = {{ position: "absolute", top: height * 0.75 }} >
                 <View style = {{ margin: 20, alignSelf: "center" }} >
                     <Indicator ScrollX = {ScrollX} data = {DATA} color = "#fff" />
                 </View>
@@ -155,7 +155,7 @@ const Walkthrough = (props: PropsList) => {
                     }}
                     onPress = {async() => {
                         await AsyncStorage.setItem('isWalkthrough', 'yes')
-                        props.navigation.replace("Home")
+                        props.navigation.replace("BottomTab")
                     }}
                 >
                     <Text

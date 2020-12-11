@@ -5,6 +5,7 @@ import { StackNavigationProp } from '@react-navigation/stack'
 import { RouteProp } from '@react-navigation/native'
 import { NavigationType } from '../types/navigation'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import { Colors } from './../refs/Colors';
 
 
 type PropsList = {
@@ -27,7 +28,7 @@ const SplashScreen = (props: PropsList) => {
             }).start(async() => {
                 const isWalkthrough = await AsyncStorage.getItem('isWalkthrough')
                 if (isWalkthrough != null) {
-                    props.navigation.replace("Home")
+                    props.navigation.replace("BottomTab")
                 } else {
                     props.navigation.replace("Walkthrough")
                 }
@@ -37,13 +38,14 @@ const SplashScreen = (props: PropsList) => {
     }, [])
 
     return (
-        <View style = {{ flex: 1, justifyContent: "center", alignItems: "center", backgroundColor: "white" }} >
+        <View style = {{ flex: 1, justifyContent: "center", alignItems: "center", backgroundColor: Colors.background }} >
             <Animated.Text
                 style = {{
                     fontFamily: Fonts.Lato.Bold,
                     fontSize: 30,
                     letterSpacing: -3,
-                    opacity
+                    opacity,
+                    color: Colors.primary_text
                 }}
             >
                 Ayo Masak!

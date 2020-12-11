@@ -55,7 +55,7 @@ const Loading = () => {
                 fontFamily: Fonts.Lato.Bold,
                 fontSize: 20,
                 margin: 20,
-                color: "#303030"
+                color: Colors.primary_text
             }}
         >
             Categories
@@ -65,7 +65,7 @@ const Loading = () => {
                 style = {{
                     height: 200,
                     width: width - 40,
-                    backgroundColor: "gainsboro",
+                    backgroundColor: Colors.secondary_card,
                     borderRadius: 8,
                     marginHorizontal: 20,
                 }}
@@ -77,7 +77,7 @@ const Loading = () => {
                 fontFamily: Fonts.Lato.Bold,
                 fontSize: 20,
                 margin: 20,
-                color: "#303030"
+                color: Colors.primary_text
             }}
         >
             Recipes
@@ -87,7 +87,7 @@ const Loading = () => {
                 style = {{
                     height: 200,
                     width: width / 2 - 30,
-                    backgroundColor: "gainsboro",
+                    backgroundColor: Colors.secondary_card,
                     borderRadius: 8,
                     marginLeft: 20,
                     marginRight: 10,
@@ -98,7 +98,7 @@ const Loading = () => {
                 style = {{
                     height: 200,
                     width: width / 2 - 30,
-                    backgroundColor: "gainsboro",
+                    backgroundColor: Colors.secondary_card,
                     borderRadius: 8,
                     marginLeft: 10,
                     marginRight: 20,
@@ -109,7 +109,7 @@ const Loading = () => {
                 style = {{
                     height: 200,
                     width: width / 2 - 30,
-                    backgroundColor: "gainsboro",
+                    backgroundColor: Colors.secondary_card,
                     borderRadius: 8,
                     marginLeft: 20,
                     marginRight: 10,
@@ -120,7 +120,7 @@ const Loading = () => {
                 style = {{
                     height: 200,
                     width: width / 2 - 30,
-                    backgroundColor: "gainsboro",
+                    backgroundColor: Colors.secondary_card,
                     borderRadius: 8,
                     marginLeft: 10,
                     marginRight: 20,
@@ -250,7 +250,7 @@ const Home = (props: PropsList) => {
         <>
         <SafeAreaView
             style = {{
-                backgroundColor: 'white',
+                backgroundColor: Colors.background,
                 flex: 1
             }}
         >
@@ -266,7 +266,7 @@ const Home = (props: PropsList) => {
                             {
                                 listener: (event: any) => {
                                     const contentY = event.nativeEvent.contentOffset.y
-                                    if (contentY > ( height / 2 )) {
+                                    if (contentY > ( height / 3 )) {
                                         setScrollUp(true)
                                     } else {
                                         setScrollUp(false)
@@ -300,6 +300,8 @@ const Home = (props: PropsList) => {
                             <RefreshControl
                                 refreshing = {isRefreshing}
                                 onRefresh = {onRefresh}
+                                progressBackgroundColor = {Colors.secondary_card}
+                                colors = {[Colors.primary_text]}
                             />
                         }
                     >
@@ -308,7 +310,7 @@ const Home = (props: PropsList) => {
                                 fontFamily: Fonts.Lato.Bold,
                                 fontSize: 20,
                                 margin: 20,
-                                color: "#303030"
+                                color: Colors.primary_text
                             }}
                         >
                             Categories
@@ -365,7 +367,7 @@ const Home = (props: PropsList) => {
                                             }}
                                         />
                                         <LinearGradient
-                                            colors = {["white", "#303030"]}
+                                            colors = {["rgba(0,0,0,0)", "rgba(0,0,0,0.5)"]}
                                             style = {{
                                                 position: "absolute",
                                                 top: 0, left: 0, bottom: 0, right: 0,
@@ -408,14 +410,14 @@ const Home = (props: PropsList) => {
                                 margin: 20
                             }}
                         >
-                            <Indicator ScrollX = {scrollX} data = {categories} color = "dimgrey" />
+                            <Indicator ScrollX = {scrollX} data = {categories} color = {Colors.secondary_text} />
                         </View>
                         <Text
                             style = {{
                                 fontFamily: Fonts.Lato.Bold,
                                 fontSize: 20,
                                 marginHorizontal: 20,
-                                color: "#303030",
+                                color: Colors.primary_text,
                                 marginBottom: 20
                             }}
                         >
@@ -429,7 +431,7 @@ const Home = (props: PropsList) => {
                                             key = {index}
                                             style = {{
                                                 width: width / 2 - 30,
-                                                backgroundColor: "white",
+                                                backgroundColor: Colors.background,
                                                 marginLeft: index % 2 == 0 ? 20 : 10,
                                                 marginRight: index % 2 == 0 ? 10 : 20,
                                                 marginBottom: 20,
@@ -438,15 +440,15 @@ const Home = (props: PropsList) => {
                                             }}
                                         >
                                             <TouchableRipple
-                                                rippleColor = "rgba(0,0,0,0.15)"
-                                                underlayColor = "rgba(0,0,0,0.15)"
+                                                rippleColor = "rgba(255,255,255,0.15)"
+                                                underlayColor = "rgba(255,255,255,0.15)"
                                                 borderless = {Platform.Version < 28 ? false : true}
                                                 onPress = {() => {
                                                     ModalBottomView(true, item)
                                                 }}
                                                 style = {{
                                                     width: "100%",
-                                                    backgroundColor: "white",
+                                                    backgroundColor: Colors.background,
                                                     borderRadius: 8
                                                 }}
                                             >
@@ -466,7 +468,7 @@ const Home = (props: PropsList) => {
                                                             marginTop: 10,
                                                             marginHorizontal: 10,
                                                             fontSize: 12,
-                                                            color: "#303030"
+                                                            color: Colors.secondary_text
                                                         }}
                                                     >
                                                         {item.dificulty}
@@ -475,7 +477,7 @@ const Home = (props: PropsList) => {
                                                         style = {{
                                                             fontFamily: Fonts.Lato.Regular,
                                                             margin: 10,
-                                                            color: "#303030"
+                                                            color: Colors.primary_text
                                                         }}
                                                     >
                                                         {item.title}
@@ -499,7 +501,7 @@ const Home = (props: PropsList) => {
                             >
                                 <ActivityIndicator
                                     size = 'large'
-                                    color = 'dimgrey'
+                                    color = {Colors.secondary_text}
                                 />
                             </View>
                             : null
@@ -511,7 +513,7 @@ const Home = (props: PropsList) => {
                             style = {{
                                 paddingHorizontal: 10,
                                 paddingVertical: 5,
-                                backgroundColor: "dodgerblue",
+                                backgroundColor: Colors.blue,
                                 borderRadius: 20,
                                 position: "absolute",
                                 bottom: 20,
@@ -524,7 +526,7 @@ const Home = (props: PropsList) => {
                         >
                             <Icon
                                 size = {14}
-                                name = "arrow-down"
+                                name = "arrowdown"
                                 color = "white"
                             />
                             <Text
@@ -546,10 +548,10 @@ const Home = (props: PropsList) => {
                                 position: "absolute",
                                 bottom: 20,
                                 right: 20,
-                                backgroundColor: "paleturquoise",
+                                backgroundColor: Colors.secondary_card,
                                 padding: 10,
                                 borderRadius: 8,
-                                shadowColor: "dimgray",
+                                shadowColor: Colors.secondary_text,
                                 shadowOffset: {
                                     width: 0,
                                     height: 5,
@@ -562,6 +564,7 @@ const Home = (props: PropsList) => {
                         >
                             <TouchableOpacity
                                 onPress = {() => {
+                                    setScrollUp(false)
                                     scrollViewRef.current?.scrollTo({x: 0, y: 0, animated: true})
                                 }}
                                 style = {{
@@ -570,9 +573,9 @@ const Home = (props: PropsList) => {
                                 }}
                             >
                                 <Icon
-                                    name = "up"
+                                    name = "totop"
                                     size = {24}
-                                    color = "black"
+                                    color = {Colors.primary_text}
                                 />
                             </TouchableOpacity>
                         </View>
@@ -598,7 +601,7 @@ const Home = (props: PropsList) => {
                     style = {{
                         borderTopEndRadius: 20,
                         borderTopStartRadius: 20,
-                        backgroundColor: "white",
+                        backgroundColor: Colors.secondary_card,
                         padding: 20,
                         position: "absolute",
                         bottom: 0,
@@ -623,7 +626,7 @@ const Home = (props: PropsList) => {
                         <Text
                             style = {{
                                 fontFamily: Fonts.Lato.Bold,
-                                color: "#303030",
+                                color: Colors.primary_text,
                                 fontSize: 20,
                                 marginTop: 20
                             }}
@@ -633,46 +636,46 @@ const Home = (props: PropsList) => {
                         <Text
                             style = {{
                                 fontFamily: Fonts.Lato.Bold,
-                                color: "#303030",
+                                color: Colors.secondary_text,
                                 fontSize: 15,
                                 marginTop: 10
                             }}
                         >
                             Kesulitan
                         </Text>
-                        <Text style = {{ fontFamily: Fonts.Lato.Regular, fontSize: 13 }} >{modalItem?.dificulty}</Text>
+                        <Text style = {{ fontFamily: Fonts.Lato.Regular, fontSize: 13, color: Colors.primary_text }} >{modalItem?.dificulty}</Text>
 
                         <Text
                             style = {{
                                 fontFamily: Fonts.Lato.Bold,
-                                color: "#303030",
+                                color: Colors.secondary_text,
                                 fontSize: 15,
                                 marginTop: 10
                             }}
                         >
                             Waktu
                         </Text>
-                        <Text style = {{ fontFamily: Fonts.Lato.Regular, fontSize: 13 }} >{modalItem?.times}</Text>
+                        <Text style = {{ fontFamily: Fonts.Lato.Regular, fontSize: 13, color: Colors.primary_text }} >{modalItem?.times}</Text>
                         <Text
                             style = {{
                                 fontFamily: Fonts.Lato.Bold,
-                                color: "#303030",
+                                color: Colors.secondary_text,
                                 fontSize: 15,
                                 marginTop: 10
                             }}
                         >
                             Porsi
                         </Text>
-                        <Text style = {{ fontFamily: Fonts.Lato.Regular, fontSize: 13 }} >{modalItem?.portion}</Text>
+                        <Text style = {{ fontFamily: Fonts.Lato.Regular, fontSize: 13, color: Colors.primary_text }} >{modalItem?.portion}</Text>
                     </ScrollView>
                     <TouchableRipple
                         style = {{
-                            backgroundColor: "paleturquoise",
+                            backgroundColor: Colors.blue,
                             width: "100%",
                             padding: 20,
                             borderRadius: 8,
                             marginTop: 20,
-                            shadowColor: "dimgray",
+                            shadowColor: Colors.secondary_text,
                             shadowOffset: {
                                 width: 0,
                                 height: 5,
@@ -694,7 +697,8 @@ const Home = (props: PropsList) => {
                             style = {{
                                 textAlign: "center",
                                 fontFamily: Fonts.Lato.Regular,
-                                fontSize: 16
+                                fontSize: 16,
+                                color: Colors.primary_text
                             }}
                         >
                             Detail
