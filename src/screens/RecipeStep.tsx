@@ -8,6 +8,7 @@ import { RouteProp } from '@react-navigation/native'
 import { NavigationType } from '../types/navigation'
 import { Fonts } from './../refs/Fonts'
 import Tts from 'react-native-tts'
+import { Colors } from './../refs/Colors'
 
 type PropsList = {
     navigation: StackNavigationProp<NavigationType, "RecipeStep">,
@@ -49,7 +50,7 @@ const RecipeStep = (props: PropsList) => {
         <SafeAreaView
             style = {{
                 flex: 1,
-                backgroundColor: "white",
+                backgroundColor: Colors.background,
             }}
         >
             <TouchableRipple
@@ -60,15 +61,15 @@ const RecipeStep = (props: PropsList) => {
                     paddingVertical: 16,
                     marginVertical: 4
                 }}
-                rippleColor = "rgba(0,0,0,0.15)"
-                underlayColor = "rgba(0,0,0,0.15)"
+                rippleColor = "rgba(255,255,255,0.15)"
+                underlayColor = "rgba(255,255,255,0.15)"
                 borderless = {Platform.Version < 28 ? false : true}
                 onPress = {() => navigation.pop()}
             >
                 <Icon
                     size = {24}
                     name = "arrowleft"
-                    color = "black"
+                    color = {Colors.primary_text}
                 />
             </TouchableRipple>
             <View
@@ -83,6 +84,7 @@ const RecipeStep = (props: PropsList) => {
                     style = {{
                         fontFamily: Fonts.Lato.Regular,
                         fontSize: 20,
+                        color: Colors.primary_text
                     }}
                 >
                     {steps[currentStepIndex]}
@@ -92,27 +94,27 @@ const RecipeStep = (props: PropsList) => {
                         borderRadius: 100,
                         padding: 24
                     }}
-                    rippleColor = "rgba(0,0,0,0.15)"
-                    underlayColor = "rgba(0,0,0,0.15)"
+                    rippleColor = "rgba(255,255,255,0.15)"
+                    underlayColor = "rgba(255,255,255,0.15)"
                     borderless = {Platform.Version < 28 ? false : true}
                     onPress = {() => textToSpeech()}
                 >
                     <Icon
                         size = {24}
                         name = {isPlay ? "pausecircleo" : "playcircleo" }
-                        color = "#303030"
+                        color = {Colors.primary_text}
                     />
                 </TouchableRipple>
 
                 <View style = {{ flexDirection: "row" }} >
                     <TouchableRipple
                         style = {{
-                            backgroundColor: "paleturquoise",
+                            backgroundColor: Colors.blue,
                             width: "30%",
                             padding: 20,
                             borderRadius: 8,
                             marginTop: 20,
-                            shadowColor: "dimgray",
+                            shadowColor: Colors.secondary_text,
                             shadowOffset: {
                                 width: 0,
                                 height: 5,
@@ -126,7 +128,7 @@ const RecipeStep = (props: PropsList) => {
                         }}
                         onPress = {() => {
                             if (currentStepIndex > 0) {
-                                navigation.push("RecipeStep", {steps, currentStepIndex: currentStepIndex - 1})
+                                navigation.push("RecipeStep", {steps, currentStepIndex: currentStepIndex - 1, key: route.params.key, thumb: route.params.thumb})
                             } else {
                                 navigation.pop()
                             }
@@ -138,18 +140,18 @@ const RecipeStep = (props: PropsList) => {
                         <Icon
                             size = {24}
                             name = "left"
-                            color = "#303030"
+                            color = {Colors.primary_text}
                         />
                     </TouchableRipple>
                     <View style = {{ width: "40%" }} />
                     <TouchableRipple
                         style = {{
-                            backgroundColor: "paleturquoise",
+                            backgroundColor: Colors.blue,
                             width: "30%",
                             padding: 20,
                             borderRadius: 8,
                             marginTop: 20,
-                            shadowColor: "dimgray",
+                            shadowColor: Colors.secondary_text,
                             shadowOffset: {
                                 width: 0,
                                 height: 5,
@@ -163,7 +165,7 @@ const RecipeStep = (props: PropsList) => {
                         }}
                         onPress = {() => {
                             if (currentStepIndex < ( steps.length - 1) ) {
-                                navigation.push("RecipeStep", {steps, currentStepIndex: currentStepIndex + 1})
+                                navigation.push("RecipeStep", {steps, currentStepIndex: currentStepIndex + 1, key: route.params.key, thumb: route.params.thumb})
                             } else {
                                 navigation.navigate("RecipesDetail", {key: route.params.key, thumb: route.params.thumb})
                             }
@@ -175,7 +177,7 @@ const RecipeStep = (props: PropsList) => {
                         <Icon
                             size = {24}
                             name = "right"
-                            color = "#303030"
+                            color = {Colors.primary_text}
                         />
                     </TouchableRipple>
                 </View>
