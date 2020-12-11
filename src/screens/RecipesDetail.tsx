@@ -8,6 +8,7 @@ import { Fonts } from './../refs/Fonts'
 import { API } from './../refs/API'
 import { TouchableRipple } from 'react-native-paper'
 import Icon from 'react-native-vector-icons/AntDesign'
+import { Colors } from './../refs/Colors'
 
 type PropsList = {
     navigation: StackNavigationProp<NavigationType, "RecipesDetail">,
@@ -75,7 +76,7 @@ const RecipesDetail = (props: PropsList) => {
         <SafeAreaView
             style = {{
                 flex: 1,
-                backgroundColor: "white"
+                backgroundColor: Colors.background
             }}
         >
             <TouchableRipple
@@ -86,15 +87,15 @@ const RecipesDetail = (props: PropsList) => {
                     paddingVertical: 16,
                     marginVertical: 4
                 }}
-                rippleColor = "rgba(0,0,0,0.15)"
-                underlayColor = "rgba(0,0,0,0.15)"
+                rippleColor = "rgba(255,255,255,0.15)"
+                underlayColor = "rgba(255,255,255,0.15)"
                 borderless = {Platform.Version < 28 ? false : true}
                 onPress = {() => navigation.goBack()}
             >
                 <Icon
                     size = {24}
                     name = "arrowleft"
-                    color = "black"
+                    color = {Colors.primary_text}
                 />
             </TouchableRipple>
             {
@@ -106,7 +107,7 @@ const RecipesDetail = (props: PropsList) => {
                         alignItems: "center"
                     }}
                 >
-                    <ActivityIndicator color = "dimgray" />
+                    <ActivityIndicator color = {Colors.secondary_text} />
                 </View>
                 :
                 (
@@ -115,10 +116,10 @@ const RecipesDetail = (props: PropsList) => {
                         style = {{
                             flex: 1,
                             justifyContent: "center",
-                            alignItems: "center"
+                            alignItems: "center",
                         }}
                     >
-                        <Text>
+                        <Text style = {{ fontFamily: Fonts.Lato.Regular, color: Colors.primary_text }} >
                             Error...
                         </Text>
                     </View>
@@ -138,8 +139,8 @@ const RecipesDetail = (props: PropsList) => {
                             }}
                         >
                             <TouchableRipple
-                                rippleColor = "rgba(0,0,0,0.75)"
-                                underlayColor = "rgba(0,0,0,0.75)"
+                                rippleColor = "rgba(255,255,255,0.75)"
+                                underlayColor = "rgba(255,255,255,0.75)"
                                 borderless = {true}
                                 style = {{
                                     width: "100%",
@@ -158,7 +159,7 @@ const RecipesDetail = (props: PropsList) => {
                                         width: "100%",
                                         height: 300,
                                         borderRadius: 8,
-                                        backgroundColor: "dimgray"
+                                        backgroundColor: Colors.secondary_text
                                     }}
                                 />
                             </TouchableRipple>
@@ -167,7 +168,8 @@ const RecipesDetail = (props: PropsList) => {
                             style = {{
                                 marginTop: 20,
                                 fontFamily: Fonts.Lato.Bold,
-                                fontSize: 20
+                                fontSize: 20,
+                                color: Colors.primary_text
                             }}
                         >
                             {recipe.title}
@@ -176,67 +178,67 @@ const RecipesDetail = (props: PropsList) => {
                         <Text
                             style = {{
                                 fontFamily: Fonts.Lato.Bold,
-                                color: "#303030",
                                 fontSize: 15,
-                                marginTop: 10
+                                marginTop: 10,
+                                color: Colors.secondary_text
                             }}
                         >
                             Kesulitan
                         </Text>
-                        <Text style = {{ fontFamily: Fonts.Lato.Regular, fontSize: 14 }} >{recipe.dificulty}</Text>
+                        <Text style = {{ fontFamily: Fonts.Lato.Regular, fontSize: 14, color: Colors.primary_text }} >{recipe.dificulty}</Text>
 
                         <Text
                             style = {{
                                 fontFamily: Fonts.Lato.Bold,
-                                color: "#303030",
+                                color: Colors.secondary_text,
                                 fontSize: 15,
                                 marginTop: 10
                             }}
                         >
                             Waktu
                         </Text>
-                        <Text style = {{ fontFamily: Fonts.Lato.Regular, fontSize: 14 }} >{recipe.times}</Text>
+                        <Text style = {{ fontFamily: Fonts.Lato.Regular, fontSize: 14, color: Colors.primary_text }} >{recipe.times}</Text>
 
                         <Text
                             style = {{
                                 fontFamily: Fonts.Lato.Bold,
-                                color: "#303030",
+                                color: Colors.secondary_text,
                                 fontSize: 15,
                                 marginTop: 10
                             }}
                         >
                             Porsi
                         </Text>
-                        <Text style = {{ fontFamily: Fonts.Lato.Regular, fontSize: 14 }} >{recipe.servings}</Text>
+                        <Text style = {{ fontFamily: Fonts.Lato.Regular, fontSize: 14, color: Colors.primary_text }} >{recipe.servings}</Text>
 
                         <Text
                             style = {{
                                 fontFamily: Fonts.Lato.Bold,
-                                color: "#303030",
+                                color: Colors.secondary_text,
                                 fontSize: 15,
                                 marginTop: 10
                             }}
                         >
                             Pembuat
                         </Text>
-                        <Text style = {{ fontFamily: Fonts.Lato.Regular, fontSize: 14 }} >{recipe.author?.user}</Text>
+                        <Text style = {{ fontFamily: Fonts.Lato.Regular, fontSize: 14, color: Colors.primary_text }} >{recipe.author?.user}</Text>
 
                         <Text
                             style = {{
                                 fontFamily: Fonts.Lato.Bold,
-                                color: "#303030",
+                                color: Colors.secondary_text,
                                 fontSize: 15,
                                 marginTop: 10
                             }}
                         >
                             Diupload
                         </Text>
-                        <Text style = {{ fontFamily: Fonts.Lato.Regular, fontSize: 14 }} >{recipe.author?.datePublished}</Text>
+                        <Text style = {{ fontFamily: Fonts.Lato.Regular, fontSize: 14, color: Colors.primary_text }} >{recipe.author?.datePublished}</Text>
 
                         <Text
                             style = {{
                                 fontFamily: Fonts.Lato.Bold,
-                                color: "#303030",
+                                color: Colors.secondary_text,
                                 fontSize: 15,
                                 marginTop: 10
                             }}
@@ -246,7 +248,7 @@ const RecipesDetail = (props: PropsList) => {
                         <View
                             style = {{
                                 padding: 10,
-                                backgroundColor: "aliceblue",
+                                backgroundColor: Colors.secondary_card,
                                 borderRadius: 8,
                                 marginTop: 10
                             }}
@@ -257,8 +259,8 @@ const RecipesDetail = (props: PropsList) => {
                                         return (
                                             <View style = {{ marginTop: 5 }} key = {index} >
                                                 <TouchableRipple
-                                                rippleColor = "rgba(0,0,0,0.75)"
-                                                underlayColor = "rgba(0,0,0,0.75)"
+                                                rippleColor = "rgba(255,255,255,0.75)"
+                                                underlayColor = "rgba(255,255,255,0.75)"
                                                 borderless = {true}
                                                 style = {{
                                                     borderRadius: 8,
@@ -275,17 +277,17 @@ const RecipesDetail = (props: PropsList) => {
                                                         style = {{
                                                             width: width * 0.25,
                                                             height: 75,
-                                                            backgroundColor: "dimgray",
+                                                            backgroundColor: Colors.secondary_text,
                                                             borderRadius: 8
                                                         }}
                                                     />
                                                 </TouchableRipple>
-                                                <Text style = {{ fontFamily: Fonts.Lato.Regular, fontSize: 14, marginTop: 5 }} >{item.item_name}</Text>
+                                                <Text style = {{ fontFamily: Fonts.Lato.Regular, fontSize: 14, marginTop: 5, color: Colors.primary_text }} >{item.item_name}</Text>
                                             </View>
                                         )
                                     })
                                 :
-                                    <Text style = {{ fontFamily: Fonts.Lato.Regular, fontSize: 14 }} >
+                                    <Text style = {{ fontFamily: Fonts.Lato.Regular, fontSize: 14, color: Colors.primary_text }} >
                                         Tidak Ada
                                     </Text>
                             }
@@ -294,7 +296,7 @@ const RecipesDetail = (props: PropsList) => {
                         <Text
                             style = {{
                                 fontFamily: Fonts.Lato.Bold,
-                                color: "#303030",
+                                color: Colors.secondary_text,
                                 fontSize: 15,
                                 marginTop: 10
                             }}
@@ -304,7 +306,7 @@ const RecipesDetail = (props: PropsList) => {
                         <View
                             style = {{
                                 padding: 10,
-                                backgroundColor: "aliceblue",
+                                backgroundColor: Colors.secondary_card,
                                 borderRadius: 8,
                                 marginTop: 10
                             }}
@@ -314,12 +316,12 @@ const RecipesDetail = (props: PropsList) => {
                                     (recipe.ingredient || []).map((item, index) => {
                                         return (
                                             <View style = {{ marginTop: 5 }} key = {index} >
-                                                <Text style = {{ fontFamily: Fonts.Lato.Regular, fontSize: 14, marginTop: 5 }} >· {item}</Text>
+                                                <Text style = {{ fontFamily: Fonts.Lato.Regular, fontSize: 14, marginTop: 5, color: Colors.primary_text }} >· {item}</Text>
                                             </View>
                                         )
                                     })
                                 :
-                                    <Text style = {{ fontFamily: Fonts.Lato.Regular, fontSize: 14 }} >
+                                    <Text style = {{ fontFamily: Fonts.Lato.Regular, fontSize: 14, color: Colors.primary_text }} >
                                         Tidak Ada
                                     </Text>
                             }
@@ -328,7 +330,7 @@ const RecipesDetail = (props: PropsList) => {
                         <Text
                             style = {{
                                 fontFamily: Fonts.Lato.Bold,
-                                color: "#303030",
+                                color: Colors.secondary_text,
                                 fontSize: 15,
                                 marginTop: 10
                             }}
@@ -337,12 +339,12 @@ const RecipesDetail = (props: PropsList) => {
                         </Text>
                         <TouchableRipple
                             style = {{
-                                backgroundColor: "paleturquoise",
+                                backgroundColor: Colors.blue,
                                 width: "100%",
                                 padding: 20,
                                 borderRadius: 8,
                                 marginTop: 20,
-                                shadowColor: "dimgray",
+                                shadowColor: Colors.secondary_text,
                                 shadowOffset: {
                                     width: 0,
                                     height: 5,
@@ -363,7 +365,8 @@ const RecipesDetail = (props: PropsList) => {
                                 style = {{
                                     textAlign: "center",
                                     fontFamily: Fonts.Lato.Regular,
-                                    fontSize: 16
+                                    fontSize: 16,
+                                    color: Colors.primary_text
                                 }}
                             >
                                 Detail Langkah-langkah
