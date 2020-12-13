@@ -58,7 +58,7 @@ const Loading = () => {
                 color: Colors.primary_text
             }}
         >
-            Categories
+            Kategori
         </Text>
         <View style = {{ flexDirection: "row" }} >
             <View
@@ -80,7 +80,7 @@ const Loading = () => {
                 color: Colors.primary_text
             }}
         >
-            Recipes
+            Resep Makanan
         </Text>
         <View style = {{ flexDirection: "row", flexWrap: "wrap" }} >
             <View
@@ -313,7 +313,7 @@ const Home = (props: PropsList) => {
                                 color: Colors.primary_text
                             }}
                         >
-                            Categories
+                            Kategori
                         </Text>
                         <Animated.FlatList
                             data = {categories}
@@ -421,7 +421,7 @@ const Home = (props: PropsList) => {
                                 marginBottom: 20
                             }}
                         >
-                            Recipes
+                            Resep Makanan
                         </Text>
                         <View style = {{ flexDirection: "row", flexWrap: "wrap", justifyContent: "center", alignContent: "center" }} >
                             {
@@ -458,7 +458,7 @@ const Home = (props: PropsList) => {
                                                         style = {{
                                                             height: 200,
                                                             width: "100%",
-                                                            backgroundColor: "gainsboro",
+                                                            backgroundColor: Colors.secondary_text,
                                                             borderRadius: 8
                                                         }}
                                                     />
@@ -619,7 +619,7 @@ const Home = (props: PropsList) => {
                             style = {{
                                 width: '100%',
                                 height: 200,
-                                backgroundColor: "dimgray",
+                                backgroundColor: Colors.secondary_text,
                                 borderRadius: 8
                             }}
                         />

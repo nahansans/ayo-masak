@@ -9,6 +9,7 @@ import { API } from './../refs/API'
 import { TouchableRipple } from 'react-native-paper'
 import Icon from 'react-native-vector-icons/AntDesign'
 import { Colors } from './../refs/Colors'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 type PropsList = {
     navigation: StackNavigationProp<NavigationType, "RecipesDetail">,
@@ -21,6 +22,7 @@ type needItemType = {
 }
 
 type recipeType = {
+    key?: string,
     title: string,
     thumb: string,
     servings?: string,
@@ -43,6 +45,7 @@ const RecipesDetail = (props: PropsList) => {
 
     useEffect(() => {
         getRecipeDetail()
+        checkBookmark()
     }, [])
 
     const [recipe, setRecipe] = useState({} as recipeType)
@@ -50,6 +53,7 @@ const RecipesDetail = (props: PropsList) => {
     const [imageThumb, setImageThumb] = useState("")
     const [loading, setLoading] = useState(false)
     const [isError, setIsError] = useState(false)
+    const [isBookmark, setIsBookmark] = useState(false)
 
     const getRecipeDetail = () => {
         setLoading(true)
@@ -72,6 +76,65 @@ const RecipesDetail = (props: PropsList) => {
         })
 
     }
+
+    const checkBookmark = async() => {
+        const dataBookmark = await AsyncStorage.getItem('bookmark')
+        if (dataBookmark != null) {
+            const parseBookmark = JSON.parse(dataBookmark) as recipeType[]
+            for (const bookmark of (parseBookmark || [])) {
+            
+                if (bookmark.key == route.params.key) {
+                    setIsBookmark(true)
+    
+                    break
+                }
+            }
+        }
+        // await AsyncStorage.removeItem('bookmark')
+    }
+
+    const saveToBookmark = async() => {
+        // const dataBookmark = (JSON.parse(JSON.stringify(await AsyncStorage.getItem('bookmark'))) || []) as recipeType[]
+        const dataBookmark = await AsyncStorage.getItem('bookmark')
+        const newData = []
+        if (dataBookmark != null) {
+            const parseBookmark = JSON.parse(dataBookmark) as recipeType[]
+
+            for (const bookmark of (parseBookmark || []) ) {
+                if (!isBookmark) {
+                    newData.push(bookmark)
+                } else {
+                    if (bookmark.key != route.params.key) {
+                        newData.push(bookmark)
+                    }
+                }
+            }
+            if (!isBookmark) {
+                newData.push({
+                    ...recipe,
+                    key: route.params.key,
+                    secondary_thumb: route.params.thumb
+                })
+            }
+
+
+        } else {
+
+            newData.push({
+                ...recipe,
+                key: route.params.key,
+                secondary_thumb: route.params.thumb
+            })
+
+        }
+        
+        await AsyncStorage.setItem('bookmark', JSON.stringify(newData))
+            .then(() => {
+                setIsBookmark(!isBookmark)
+            })
+
+    }
+
     return (
         <SafeAreaView
             style = {{
@@ -399,6 +462,34 @@ const RecipesDetail = (props: PropsList) => {
 
                     </ScrollView>
                 )
+            }
+            {
+                !loading || !isError ?
+                <TouchableOpacity
+                    style = {{
+                        width: 48,
+                        height: 48,
+                        position: "absolute",
+                        bottom: 40, right: 20,
+                        borderRadius: 24,
+                        backgroundColor: Colors.blue,
+                        alignItems: "center",
+                        justifyContent: "center",
+                        shadowColor: Colors.secondary_text,
+                        shadowOffset: {
+                            width: 0,
+                            height: 5,
+                        },
+                        shadowOpacity: 0.36,
+                        shadowRadius: 6.68,
+
+                        elevation: 11,
+                    }}
+                    onPress = {saveToBookmark}
+                >
+                    <Icon name = {isBookmark ? "heart" : "hearto"} size = {24} color = "white" />
+                </TouchableOpacity>
+                : null
             }
             <Modal
                 visible = {isImageExpand}

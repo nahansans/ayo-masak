@@ -127,6 +127,8 @@ const RecipeStep = (props: PropsList) => {
                             justifyContent: "center"
                         }}
                         onPress = {() => {
+                            setIsPlay(false)
+                            Tts.stop()
                             if (currentStepIndex > 0) {
                                 navigation.push("RecipeStep", {steps, currentStepIndex: currentStepIndex - 1, key: route.params.key, thumb: route.params.thumb})
                             } else {
@@ -164,6 +166,8 @@ const RecipeStep = (props: PropsList) => {
                             justifyContent: "center"
                         }}
                         onPress = {() => {
+                            setIsPlay(false)
+                            Tts.stop()
                             if (currentStepIndex < ( steps.length - 1) ) {
                                 navigation.push("RecipeStep", {steps, currentStepIndex: currentStepIndex + 1, key: route.params.key, thumb: route.params.thumb})
                             } else {
