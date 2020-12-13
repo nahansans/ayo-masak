@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react'
-import { View, ScrollView, Text, Image, SafeAreaView, Dimensions, ActivityIndicator, Platform, Modal, TouchableOpacity } from 'react-native'
+import React, { useState, useEffect, useRef } from 'react'
+import { View, ScrollView, Text, Image, SafeAreaView, Dimensions, ActivityIndicator, Platform, Modal, TouchableOpacity, Animated, RefreshControl } from 'react-native'
 
 import { StackNavigationProp } from '@react-navigation/stack'
 import { RouteProp } from '@react-navigation/native'
@@ -10,6 +10,8 @@ import { TouchableRipple } from 'react-native-paper'
 import Icon from 'react-native-vector-icons/AntDesign'
 import { Colors } from './../refs/Colors'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+
+import ModalOffline from '../components/ModalOffline'
 
 type PropsList = {
     navigation: StackNavigationProp<NavigationType, "RecipesDetail">,
@@ -44,16 +46,21 @@ const RecipesDetail = (props: PropsList) => {
     const { navigation, route } = props
 
     useEffect(() => {
+
         getRecipeDetail()
         checkBookmark()
     }, [])
-
+    
     const [recipe, setRecipe] = useState({} as recipeType)
-    const [isImageExpand, setIsImageExpand] = useState(false)
     const [imageThumb, setImageThumb] = useState("")
+    const [isImageExpand, setIsImageExpand] = useState(false)
+
     const [loading, setLoading] = useState(false)
     const [isError, setIsError] = useState(false)
     const [isBookmark, setIsBookmark] = useState(false)
+    const [isRefreshing, setisRefreshing] = useState(false)
+
+
 
     const getRecipeDetail = () => {
         setLoading(true)
@@ -77,6 +84,8 @@ const RecipesDetail = (props: PropsList) => {
 
     }
 
+
+
     const checkBookmark = async() => {
         const dataBookmark = await AsyncStorage.getItem('bookmark')
         if (dataBookmark != null) {
@@ -94,7 +103,6 @@ const RecipesDetail = (props: PropsList) => {
     }
 
     const saveToBookmark = async() => {
-        // const dataBookmark = (JSON.parse(JSON.stringify(await AsyncStorage.getItem('bookmark'))) || []) as recipeType[]
         const dataBookmark = await AsyncStorage.getItem('bookmark')
         const newData = []
         if (dataBookmark != null) {
@@ -133,6 +141,13 @@ const RecipesDetail = (props: PropsList) => {
                 setIsBookmark(!isBookmark)
             })
 
+    }
+
+    const onRefresh = () => {
+        setisRefreshing(true)
+        setisRefreshing(false)
+        getRecipeDetail()
+        checkBookmark()
     }
 
     return (
@@ -192,6 +207,14 @@ const RecipesDetail = (props: PropsList) => {
                         style = {{
                             paddingHorizontal: 20
                         }}
+                        refreshControl = {
+                            <RefreshControl
+                                refreshing = {isRefreshing}
+                                onRefresh = {onRefresh}
+                                progressBackgroundColor = {Colors.secondary_card}
+                                colors = {[Colors.primary_text]}
+                            />
+                        }
                     >
                         <View
                             style = {{
@@ -533,6 +556,7 @@ const RecipesDetail = (props: PropsList) => {
                     </TouchableOpacity>
                 </View>  
             </Modal>
+            <ModalOffline />
         </SafeAreaView>
     )
 }

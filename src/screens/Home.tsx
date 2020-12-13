@@ -24,6 +24,7 @@ import { NavigationType } from '../types/navigation'
 import Indicator from './../components/Indicator'
 import LinearGradient from 'react-native-linear-gradient'
 import { TouchableRipple } from 'react-native-paper'
+import ModalOffline from './../components/ModalOffline'
 
 type PropsList = {
     navigation: StackNavigationProp<NavigationType, "Home">,
@@ -706,6 +707,7 @@ const Home = (props: PropsList) => {
                     </TouchableRipple>
                 </Animated.View>
             </Modal>
+            <ModalOffline />
         </SafeAreaView>
         </>
     )

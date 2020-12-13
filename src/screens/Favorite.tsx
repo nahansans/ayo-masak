@@ -8,6 +8,7 @@ import { Colors } from './../refs/Colors'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { TouchableRipple } from 'react-native-paper'
 import Icon from 'react-native-vector-icons/AntDesign'
+import ModalOffline from '../components/ModalOffline'
 
 type PropsList = {
     navigation: StackNavigationProp<NavigationType, "Favorite">
@@ -383,6 +384,7 @@ const Favorite = (props: PropsList) => {
                     </TouchableOpacity>
                 </Animated.View>
             </Modal>
+            <ModalOffline />
         </SafeAreaView>
     )
 }
