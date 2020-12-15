@@ -11,7 +11,7 @@ import Icon from 'react-native-vector-icons/AntDesign'
 import { Colors } from './../refs/Colors'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
-import ModalOffline from '../components/ModalOffline'
+import NetDisconnect from '../components/NetDisconnect'
 
 type PropsList = {
     navigation: StackNavigationProp<NavigationType, "RecipesDetail">,
@@ -556,7 +556,7 @@ const RecipesDetail = (props: PropsList) => {
                     </TouchableOpacity>
                 </View>  
             </Modal>
-            <ModalOffline />
+            <NetDisconnect />
         </SafeAreaView>
     )
 }
