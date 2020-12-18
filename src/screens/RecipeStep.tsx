@@ -132,7 +132,7 @@ const RecipeStep = (props: PropsList) => {
                             if (currentStepIndex > 0) {
                                 navigation.push("RecipeStep", {steps, currentStepIndex: currentStepIndex - 1, key: route.params.key, thumb: route.params.thumb})
                             } else {
-                                navigation.pop()
+                                navigation.navigate("RecipesDetail", {key: route.params.key, thumb: route.params.thumb})
                             }
                         }}
                         rippleColor = "rgba(0,0,0,0.15)"

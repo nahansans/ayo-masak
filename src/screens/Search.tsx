@@ -8,6 +8,7 @@ import { Colors } from './../refs/Colors'
 import { API } from './../refs/API'
 import Icon from 'react-native-vector-icons/AntDesign'
 import { TouchableRipple } from 'react-native-paper'
+import NetDisconnect from './../components/NetDisconnect'
 
 type PropsList = {
     navigation: StackNavigationProp<NavigationType, "Search">
@@ -78,11 +79,14 @@ const Search = (props: PropsList) => {
                             },
                             callback: {
                                 onSuccess: resJson => {
-                                    const { results } = resJson
-                                    setSearchData(results)
+                                    console.log(resJson)
                                     setIsLoading(false)
+                                    setSearchData(resJson.results)
                                 },
-                                onFailed: resJson => { setIsLoading(false) }
+                                onFailed: results => { 
+                                    console.log(results)
+                                    setIsLoading(false) 
+                                }
                             }
                         })
                     }}
@@ -168,6 +172,7 @@ const Search = (props: PropsList) => {
                     })
                 }
             </ScrollView>
+            <NetDisconnect />
         </SafeAreaView>
     )
 }

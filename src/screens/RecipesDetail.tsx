@@ -487,7 +487,7 @@ const RecipesDetail = (props: PropsList) => {
                 )
             }
             {
-                !loading || !isError ?
+                !loading && !isError ?
                 <TouchableOpacity
                     style = {{
                         width: 48,

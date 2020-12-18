@@ -49,6 +49,46 @@ type categoriesType = {
 const { width, height } = Dimensions.get("window")
 
 const Loading = () => {
+    const opacity = useRef(new Animated.Value(0)).current
+    const scale = useRef(new Animated.Value(0)).current
+
+    useEffect(() => {
+        loadOpacity()
+        loadScale()
+    }, [])
+
+    const loadOpacity = () => {
+        Animated.timing(opacity, {
+            toValue: 1,
+            duration: 200,
+            useNativeDriver: true
+        }).start(() => hideOpacity())
+    }
+    
+    const hideOpacity = () => {
+        Animated.timing(opacity, {
+            toValue: 0,
+            duration: 200,
+            useNativeDriver: true
+        }).start(() => loadOpacity())
+    }
+
+    const loadScale = () => {
+        Animated.timing(scale, {
+            toValue: 1,
+            duration: 200,
+            useNativeDriver: true
+        }).start(() => hideScale())
+    }
+    
+    const hideScale = () => {
+        Animated.timing(scale, {
+            toValue: 0.93,
+            duration: 400,
+            useNativeDriver: true
+        }).start(() => loadScale())
+    }
+
     return (
         <>
         <Text
@@ -62,13 +102,15 @@ const Loading = () => {
             Kategori
         </Text>
         <View style = {{ flexDirection: "row" }} >
-            <View
+            <Animated.View
                 style = {{
                     height: 200,
                     width: width - 40,
                     backgroundColor: Colors.secondary_card,
                     borderRadius: 8,
                     marginHorizontal: 20,
+                    opacity,
+                    transform: [{scale}]
                 }}
             />
         </View>
@@ -84,7 +126,7 @@ const Loading = () => {
             Resep Makanan
         </Text>
         <View style = {{ flexDirection: "row", flexWrap: "wrap" }} >
-            <View
+            <Animated.View
                 style = {{
                     height: 200,
                     width: width / 2 - 30,
@@ -92,10 +134,12 @@ const Loading = () => {
                     borderRadius: 8,
                     marginLeft: 20,
                     marginRight: 10,
-                    marginBottom: 20
+                    marginBottom: 20,
+                    opacity,
+                    transform: [{scale}]
                 }}
             />
-            <View
+            <Animated.View
                 style = {{
                     height: 200,
                     width: width / 2 - 30,
@@ -103,10 +147,12 @@ const Loading = () => {
                     borderRadius: 8,
                     marginLeft: 10,
                     marginRight: 20,
-                    marginBottom: 20
+                    marginBottom: 20,
+                    opacity,
+                    transform: [{scale}]
                 }}
             />
-            <View
+            <Animated.View
                 style = {{
                     height: 200,
                     width: width / 2 - 30,
@@ -114,10 +160,12 @@ const Loading = () => {
                     borderRadius: 8,
                     marginLeft: 20,
                     marginRight: 10,
-                    marginBottom: 20
+                    marginBottom: 20,
+                    opacity,
+                    transform: [{scale}]
                 }}
             />
-            <View
+            <Animated.View
                 style = {{
                     height: 200,
                     width: width / 2 - 30,
@@ -125,7 +173,9 @@ const Loading = () => {
                     borderRadius: 8,
                     marginLeft: 10,
                     marginRight: 20,
-                    marginBottom: 20
+                    marginBottom: 20,
+                    opacity,
+                    transform: [{scale}]
                 }}
             />
         </View>
@@ -218,7 +268,8 @@ const Home = (props: PropsList) => {
             callback: {
                 onSuccess: resJson => {
                     const results = resJson.results
-                    const newData = JSON.parse(JSON.stringify(recipes)).concat(results)
+                    const newData = recipes.concat(results)
+                    // const newData = JSON.parse(JSON.stringify(recipes)).concat(results)
 
                     setRecipes(newData)
 
@@ -256,7 +307,7 @@ const Home = (props: PropsList) => {
             }}
         >
             {
-                categories.length == 0 ?
+                recipes.length == 0 ?
                 <Loading />
                 :
                 <>

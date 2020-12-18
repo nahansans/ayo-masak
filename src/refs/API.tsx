@@ -13,7 +13,7 @@ export const makeRequest = async(url: string, refs: refsType) => {
     .then(res => res.json())
     .then(resJson => {
         if (resJson != null) {
-            if (resJson.status == true) {
+            if (resJson.status == true || resJson.status != undefined) {
                 refs.callback.onSuccess(resJson)
             } else {
                 refs.callback.onFailed({status: resJson.status || resJson.status, resJson})
